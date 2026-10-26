@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Past Papers Namibia</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #7b3f29; /* Brown */
+            --bg-color: #fdfaf5; /* Cream */
+            --text-dark: #2d1b13;
+            --text-light: #6b5b54;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        header {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary);
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        /* Pricing Grid */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .card {
+            background: #fff;
+            border: 2px solid #e8dfd8;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .card h2 {
+            color: var(--primary);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        .price { font-size: 2rem; font-weight: 900; color: var(--text-dark); margin: 15px 0; }
+        .bundle-text { color: var(--text-light); font-size: 0.9rem; margin-bottom: 20px; }
+        
+        /* Order Form Section */
+        .order-section {
+            background: #fff;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+        .order-section h2 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-dark); }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        textarea { resize: vertical; height: 100px; }
+        
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover { background-color: #5c2e1c; }
+        
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        .slogan {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-top: 10px;
+            letter-spacing: 2px;
+        }
+        
+        /* Mobile adjustments */
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>NSSCO & NSSCAS Past Papers</h1>
+        <p class="subtitle">Affordable revision materials for your examination preparation. Delivered instantly via WhatsApp, Email, or USB.</p>
+    </header>
+
+    <div class="container">
+        <!-- Pricing Cards -->
+        <div class="pricing-grid">
+            <!-- NSSCO -->
+            <div class="card">
+                <h2>NSSCO - New Curriculum</h2>
+                <p>2020 - 2024 papers with available memos</p>
+                <div class="price">N$30 <span style="font-size:1rem;font-weight:400;">/ subject</span></div>
+                <p class="bundle-text">
+                    <b>Bundles:</b><br>
+                    3 Subjects: N$80<br>
+                    5 Subjects: N$130<br>
+                    10 Subjects: N$250
+                </p>
+            </div>
+
+            <!-- NSSCAS -->
+            <div class="card">
+                <h2>NSSCAS</h2>
+                <p>2021 - 2024 papers</p>
+                <div class="price">N$20 <span style="font-size:1rem;font-weight:400;">/ subject</span></div>
+                <p class="bundle-text" style="color:#d9534f;">
+                    <i>Memos not included</i><br><br>
+                    <b>Bundles:</b><br>
+                    3 Subjects: N$50<br>
+                    5 Subjects: N$80<br>
+                    10 Subjects: N$150
+                </p>
+            </div>
+        </div>
+
+        <!-- Order Form -->
+        <div class="order-section">
+
+        <!-- Trust & Verification Process -->
+        <div class="card" style="text-align: left; margin-bottom: 40px; border-color: #16834b; background-color: #f4fdf8;">
+            <h2 style="color: #16834b; margin-bottom: 15px;">🛡️ 100% Safe & Verified Ordering</h2>
+            <p style="margin-bottom: 15px; color: var(--text-dark);">
+                We want you to feel completely confident before you pay. Here is exactly how we handle your order:
+            </p>
+            <ol style="margin-left: 20px; color: var(--text-dark); line-height: 1.8;">
+                <li><strong>Build your order</strong> below and click "Order via WhatsApp".</li>
+                <li>We will reply with a <strong>Preview</strong> (the cover page of the specific papers you requested) as proof of what you are buying.</li>
+                <li>Once you are happy with the preview, we will discuss payment methods.</li>
+                <li>After payment is confirmed, we send the full PDF/File instantly via WhatsApp, Email, or USB.</li>
+            </ol>
+        </div>
+
+            <h2>Build Your Order</h2>
+            <form action="/checkout" method="POST">
+                <div class="form-grid">
+                    <div>
+                        <label>Syllabus</label>
+                        <select name="syllabus" required>
+                            <option value="NSSCO">NSSCO</option>
+                            <option value="NSSCAS">NSSCAS</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Preferred Delivery Method</label>
+                        <select name="delivery" required>
+                            <option value="WhatsApp">WhatsApp</option>
+                            <option value="Email">Email</option>
+                            <option value="USB Transfer">USB Transfer</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <label>List your subjects (Separate with commas)</label>
+                <textarea name="subjects" placeholder="e.g., Mathematics, English, Biology, Physics" required></textarea>
+                <p style="font-size:0.85rem; color:#666; margin-top:5px; margin-bottom:20px;">
+                    * Note: The system will automatically calculate your estimated total based on the bundle discounts.
+                </p>
+
+                <button type="submit">Order via WhatsApp &rarr;</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>WhatsApp: 0818412379</p>
+        <p class="slogan">PRACTISE. PREPARE. PROGRESS.</p>
+    </footer>
+
+</body>
+</html>
