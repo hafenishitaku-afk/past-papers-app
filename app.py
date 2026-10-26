@@ -2,6 +2,11 @@ from flask import Flask, render_template, request, redirect, url_for
 import urllib.parse
 from data import SUBJECTS # Import the data we just created
 
+from flask_talisman import Talisman
+
+# This forces the app to use HTTPS and secures the connection
+Talisman(app, content_security_policy=None)
+
 app = Flask(__name__)
 
 PRICES = {
