@@ -50,7 +50,6 @@
             h1 { font-size: 1.8rem; }
         }
 
-
         /* Notice Box */
         .notice-box {
             background-color: #fdfaf5;
@@ -63,21 +62,18 @@
             color: var(--primary);
             line-height: 1.5;
         }
-
     </style>
 </head>
 <body>
 
     <header>
         <h1>NSSCO & NSSCAS Past Papers</h1>
-        <!-- <p class="subtitle">Affordable revision materials for your examination preparation. Delivered instantly via WhatsApp, Email, or USB.</p> -->
         <p class="subtitle">Affordable revision materials for your examination preparation. Delivered instantly via WhatsApp, Email, or USB.</p>
 
         <div class="notice-box">
             <strong>📱 Can't use WhatsApp right now?</strong><br>
             Call or send an SMS to <strong>0818412379</strong>, and we will provide our email address so you can place your order.
         </div>
-    
     </header>
 
     <div class="container">
@@ -103,7 +99,7 @@
         </div>
 
         <!-- Trust & Verification Process -->
-        <div class="card" style="text-align: left; margin-bottom: 40px; border-color: #16834b; background-color: #f4fdf8;">
+        <div class="card" style="text-align: left; margin-bottom: 40px; border: 2px solid #16834b; background-color: #f4fdf8;">
             <h2 style="color: #16834b; margin-bottom: 15px;">🛡️ 100% Safe & Verified Ordering</h2>
             <p style="margin-bottom: 15px; color: var(--text-dark);">
                 We want you to feel completely confident before you pay. Here is exactly how we handle your order:
@@ -115,7 +111,6 @@
                 <li>After payment is confirmed, we send the full PDF/File instantly via WhatsApp, Email, or USB.</li>
             </ol>
         </div>
-
 
         <!-- Order Form -->
         <div class="order-section">
@@ -151,6 +146,17 @@
                     <!-- Subject checkboxes will be populated here by JS -->
                 </div>
 
+                <!-- Live Price Display -->
+                <div id="price-display" style="background: #f4fdf8; border: 2px solid #16834b; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h3 style="margin: 0; color: #16834b;">Estimated Total:</h3>
+                        <p style="margin: 5px 0 0 0; font-size: 0.9rem; color: #666;" id="bundle-msg">Select subjects to see bundle discounts</p>
+                    </div>
+                    <div style="font-size: 2rem; font-weight: bold; color: var(--text-dark);">
+                        N$ <span id="total-price">0</span>
+                    </div>
+                </div>
+
                 <button type="submit">Order via WhatsApp &rarr;</button>
             </form>
         </div>
@@ -169,6 +175,7 @@
         const yearSelect = document.getElementById('yearSelect');
         const subjectsContainer = document.getElementById('subjectsContainer');
 
+        // 1. Update the Year Dropdown
         function updateYears() {
             const selectedSyllabus = syllabusSelect.value;
             const years = Object.keys(allData[selectedSyllabus]);
@@ -183,12 +190,12 @@
             updateSubjects();
         }
 
+        // 2. Update the Subjects Container
         function updateSubjects() {
             const selectedSyllabus = syllabusSelect.value;
             const selectedYear = yearSelect.value;
             
-            // Clear current subjects
-            subjectsContainer.innerHTML = '';
+            subjectsContainer.innerHTML = ''; // Clear current subjects
             
             const subjects = allData[selectedSyllabus][selectedYear] || [];
             
@@ -197,12 +204,88 @@
                 return;
             }
 
-        // --- LIVE PRICE CALCULATOR ---
+            subjects.forEach(subject => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'subject-item';
+
+                // Main Subject Checkbox
+                const subjLabel = document.createElement('label');
+                subjLabel.className = 'subject-checkbox';
+                
+                const subjCheckbox = document.createElement('input');
+                subjCheckbox.type = 'checkbox';
+                subjCheckbox.name = 'subject';
+                subjCheckbox.value = subject;
+                
+                subjCheckbox.addEventListener('change', function() {
+                    if(this.checked) {
+                        wrapper.classList.add('active');
+                    } else {
+                        wrapper.classList.remove('active');
+                        // Uncheck all papers if subject is unchecked
+                        wrapper.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                            if(cb !== subjCheckbox) cb.checked = false;
+                        });
+                    }
+                    calculatePrice(); // Update price on subject toggle
+                });
+
+                subjLabel.appendChild(subjCheckbox);
+                subjLabel.appendChild(document.createTextNode(' ' + subject));
+                wrapper.appendChild(subjLabel);
+
+                // Papers Group
+                const papersGroup = document.createElement('div');
+                papersGroup.className = 'papers-group';
+                
+                // Generate Paper 1 to 5
+                for(let i=1; i<=5; i++) {
+                    const paperLabel = document.createElement('label');
+                    paperLabel.className = 'paper-checkbox';
+                    
+                    const paperCb = document.createElement('input');
+                    paperCb.type = 'checkbox';
+                    paperCb.name = 'paper';
+                    paperCb.value = `${subject}|Paper ${i}`;
+                    
+                    paperLabel.appendChild(paperCb);
+                    paperLabel.appendChild(document.createTextNode(` Paper ${i}`));
+                    papersGroup.appendChild(paperLabel);
+                }
+
+                // Other Paper Input
+                const otherLabel = document.createElement('label');
+                otherLabel.className = 'paper-checkbox';
+                const otherCb = document.createElement('input');
+                otherCb.type = 'checkbox';
+                otherCb.className = 'other-paper-check';
+                otherCb.name = 'paper';
+                otherCb.value = `${subject}|Other`; 
+                
+                const otherInput = document.createElement('input');
+                otherInput.type = 'text';
+                otherInput.className = 'other-paper-input';
+                otherInput.placeholder = 'Specify';
+                otherInput.addEventListener('input', function() {
+                    otherCb.value = `${subject}|${this.value}`;
+                });
+
+                otherLabel.appendChild(otherCb);
+                otherLabel.appendChild(document.createTextNode(' Other:'));
+                otherLabel.appendChild(otherInput);
+                papersGroup.appendChild(otherLabel);
+
+                wrapper.appendChild(papersGroup);
+                subjectsContainer.appendChild(wrapper);
+            });
+        }
+
+        // 3. Live Price Calculator
         function calculatePrice() {
             const selectedSyllabus = syllabusSelect.value;
-            // Count how many unique subjects have at least one paper checked
             const selectedSubjects = new Set();
             
+            // Find all checked papers and extract their subject name
             document.querySelectorAll('input[name="paper"]:checked').forEach(cb => {
                 const subject = cb.value.split('|')[0];
                 selectedSubjects.add(subject);
@@ -212,7 +295,6 @@
             let price = 0;
             let msg = "";
 
-            // Pricing Logic
             const prices = {
                 "NSSCO": { single: 30, bundles: {3: 80, 5: 130, 10: 250} },
                 "NSSCAS": { single: 20, bundles: {3: 50, 5: 80, 10: 150} }
@@ -241,96 +323,24 @@
             document.getElementById('bundle-msg').textContent = msg;
         }
 
-        // Make sure the price updates whenever ANY checkbox is clicked
+        // 4. Global Change Listener for Price
         document.addEventListener('change', function(e) {
-            if(e.target.matches('input[type="checkbox"]')) {
+            if(e.target.matches('input[name="paper"]')) {
                 calculatePrice();
             }
         });
 
+        // 5. Event Listeners for Dropdowns
+        syllabusSelect.addEventListener('change', function() {
+            updateYears();
+            calculatePrice(); 
+        });
+        yearSelect.addEventListener('change', function() {
+            updateSubjects();
+            calculatePrice(); 
+        });
 
-            subjects.forEach(subject => {
-                // Create wrapper
-                const wrapper = document.createElement('div');
-                wrapper.className = 'subject-item';
-
-                // Main subject checkbox
-                const subjLabel = document.createElement('label');
-                subjLabel.className = 'subject-checkbox';
-                
-                const subjCheckbox = document.createElement('input');
-                subjCheckbox.type = 'checkbox';
-                subjCheckbox.name = 'subject';
-                subjCheckbox.value = subject;
-                
-                // Toggle papers visibility when subject is clicked
-                subjCheckbox.addEventListener('change', function() {
-                    if(this.checked) {
-                        wrapper.classList.add('active');
-                    } else {
-                        wrapper.classList.remove('active');
-                        // Uncheck all papers if subject is unchecked
-                        wrapper.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-                            if(cb !== subjCheckbox) cb.checked = false;
-                        });
-                    }
-                });
-
-                subjLabel.appendChild(subjCheckbox);
-                subjLabel.appendChild(document.createTextNode(' ' + subject));
-                wrapper.appendChild(subjLabel);
-
-                // Papers Group
-                const papersGroup = document.createElement('div');
-                papersGroup.className = 'papers-group';
-                
-                // Generate Paper 1 to 5 + Other
-                for(let i=1; i<=5; i++) {
-                    const paperLabel = document.createElement('label');
-                    paperLabel.className = 'paper-checkbox';
-                    
-                    const paperCb = document.createElement('input');
-                    paperCb.type = 'checkbox';
-                    paperCb.name = 'paper';
-                    paperCb.value = `${subject}|Paper ${i}`;
-                    
-                    paperLabel.appendChild(paperCb);
-                    paperLabel.appendChild(document.createTextNode(` Paper ${i}`));
-                    papersGroup.appendChild(paperLabel);
-                }
-
-                // Add "Other" paper input
-                const otherLabel = document.createElement('label');
-                otherLabel.className = 'paper-checkbox';
-                const otherCb = document.createElement('input');
-                otherCb.type = 'checkbox';
-                otherCb.className = 'other-paper-check';
-                otherCb.name = 'paper';
-                otherCb.value = `${subject}|Other`; // Will update dynamically
-                
-                const otherInput = document.createElement('input');
-                otherInput.type = 'text';
-                otherInput.className = 'other-paper-input';
-                otherInput.placeholder = 'Specify';
-                otherInput.addEventListener('input', function() {
-                    otherCb.value = `${subject}|${this.value}`;
-                });
-
-                otherLabel.appendChild(otherCb);
-                otherLabel.appendChild(document.createTextNode(' Other:'));
-                otherLabel.appendChild(otherInput);
-                papersGroup.appendChild(otherLabel);
-
-                wrapper.appendChild(papersGroup);
-                subjectsContainer.appendChild(wrapper);
-            });
-        }
-
-        // Event Listeners
-        syllabusSelect.addEventListener('change', updateYears);
-        yearSelect.addEventListener('change', updateSubjects);
-
-        // Initialize on load
+        // 6. Initialize on load
         updateYears();
     </script>
 </body>

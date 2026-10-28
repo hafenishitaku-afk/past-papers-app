@@ -177,23 +177,27 @@
 
 
 
-
         <!-- Order Form -->
         <div class="order-section">
-
-
             <h2>Build Your Order</h2>
-            <form action="/checkout" method="POST">
+            <form action="/checkout" method="POST" id="orderForm">
+                
                 <div class="form-grid">
                     <div>
-                        <label>Syllabus</label>
-                        <select name="syllabus" required>
+                        <label>1. Select Syllabus</label>
+                        <select name="syllabus" id="syllabusSelect" required>
                             <option value="NSSCO">NSSCO</option>
                             <option value="NSSCAS">NSSCAS</option>
                         </select>
                     </div>
                     <div>
-                        <label>Preferred Delivery Method</label>
+                        <label>2. Select Year</label>
+                        <select name="year" id="yearSelect" required>
+                            <!-- Options populated by JS -->
+                        </select>
+                    </div>
+                    <div>
+                        <label>3. Preferred Delivery</label>
                         <select name="delivery" required>
                             <option value="WhatsApp">WhatsApp</option>
                             <option value="Email">Email</option>
@@ -202,14 +206,11 @@
                     </div>
                 </div>
                 
-                <label>List your subjects (Separate with commas)</label>
-                <textarea name="subjects" placeholder="e.g., Mathematics, English, Biology, Physics" required></textarea>
-                <p style="font-size:0.85rem; color:#666; margin-top:5px; margin-bottom:20px;">
-                    * Note: The system will automatically calculate your estimated total based on the bundle discounts.
-                </p>
+                <label>4. Select Subjects & Papers</label>
+                <div class="subjects-container" id="subjectsContainer">
+                    <!-- Subject checkboxes will be populated here by JS -->
+                </div>
 
-                <button type="submit">Order via WhatsApp &rarr;</button>
-            
                 <!-- Live Price Display -->
                 <div id="price-display" style="background: #f4fdf8; border: 2px solid #16834b; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
                     <div>
@@ -221,13 +222,10 @@
                     </div>
                 </div>
 
-                <button type="submit">Order via WhatsApp &rarr;</button>                   
-            
-            
+                <button type="submit">Order via WhatsApp &rarr;</button>
             </form>
         </div>
     </div>
-
 
 
 
