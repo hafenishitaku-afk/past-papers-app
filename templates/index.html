@@ -197,6 +197,58 @@
                 return;
             }
 
+        // --- LIVE PRICE CALCULATOR ---
+        function calculatePrice() {
+            const selectedSyllabus = syllabusSelect.value;
+            // Count how many unique subjects have at least one paper checked
+            const selectedSubjects = new Set();
+            
+            document.querySelectorAll('input[name="paper"]:checked').forEach(cb => {
+                const subject = cb.value.split('|')[0];
+                selectedSubjects.add(subject);
+            });
+
+            const count = selectedSubjects.size;
+            let price = 0;
+            let msg = "";
+
+            // Pricing Logic
+            const prices = {
+                "NSSCO": { single: 30, bundles: {3: 80, 5: 130, 10: 250} },
+                "NSSCAS": { single: 20, bundles: {3: 50, 5: 80, 10: 150} }
+            };
+
+            const data = prices[selectedSyllabus];
+
+            if (count === 0) {
+                price = 0;
+                msg = "Select subjects to see bundle discounts";
+            } else if (count >= 10) {
+                price = data.bundles[10];
+                msg = "🔥 10-Subject Bundle Applied!";
+            } else if (count >= 5) {
+                price = data.bundles[5];
+                msg = "🔥 5-Subject Bundle Applied!";
+            } else if (count >= 3) {
+                price = data.bundles[3];
+                msg = "🔥 3-Subject Bundle Applied!";
+            } else {
+                price = count * data.single;
+                msg = "Standard price applied";
+            }
+
+            document.getElementById('total-price').textContent = price;
+            document.getElementById('bundle-msg').textContent = msg;
+        }
+
+        // Make sure the price updates whenever ANY checkbox is clicked
+        document.addEventListener('change', function(e) {
+            if(e.target.matches('input[type="checkbox"]')) {
+                calculatePrice();
+            }
+        });
+
+
             subjects.forEach(subject => {
                 // Create wrapper
                 const wrapper = document.createElement('div');
